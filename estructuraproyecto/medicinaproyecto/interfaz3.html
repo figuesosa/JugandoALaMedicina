@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico</title>
+    <link rel="stylesheet" href="estiloscss/stilos.css"> <!-- Llamado al archivo CSS -->
+</head>
+<body>
+
+    <div class="container">
+        <h1>Posible Diagnóstico</h1>
+        <p>Un posible diagnóstico para los síntomas que presentas es:</p>
+
+        <div class="diagnostic-box" id="diagnostic-box">
+            <!-- Aquí se mostrará el diagnóstico desde la base de datos -->
+        </div>
+
+        <p>¿Está de acuerdo con este diagnóstico?</p>
+        <button class="button" id="button-yes">Sí</button>
+        <button class="button secondary" id="button-no">No</button>
+
+        <div class="options" id="options" style="display: none;">
+            <button class="button" id="button-search-again">Buscar diagnóstico de nuevo</button>
+            <button class="button danger" id="button-exit">Salir</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const diagnosticBox = document.getElementById('diagnostic-box');
+            const urlParams = new URLSearchParams(window.location.search);
+            const diagnostico = urlParams.get('diagnostico');
+
+            // Mostrar diagnóstico
+            if (diagnostico) {
+                diagnosticBox.textContent = diagnostico;
+            } else {
+                diagnosticBox.textContent = 'No se pudo determinar un diagnóstico.';
+            }
+
+            // Evento para el botón "Sí"
+            document.getElementById('button-yes').addEventListener('click', () => {
+                window.location.href = 'InterfazFinal.html'; // Reemplaza con la ruta correcta
+            });
+
+            // Evento para el botón "No"
+            document.getElementById('button-no').addEventListener('click', () => {
+                // Mostrar las opciones adicionales
+                document.getElementById('options').style.display = 'block';
+            });
+
+            // Evento para el botón "Buscar diagnóstico de nuevo"
+            document.getElementById('button-search-again').addEventListener('click', () => {
+                fetch('http://localhost:3000/reset_pregunta_count')
+                    .then(response => response.json())
+                    .then(() => {
+                        // Limpiar localStorage y redirigir
+                        localStorage.removeItem('ultimoSintomaId');
+                        localStorage.removeItem('preguntaCount');
+                        window.location.href = 'Interfaz2.html'; // Volver al inicio
+                    })
+                    .catch(error => {
+                        console.error('Error al reiniciar el contador de preguntas:', error);
+                    });
+            });
+
+            // Evento para el botón "Salir"
+            document.getElementById('button-exit').addEventListener('click', () => {
+                window.location.href = 'InterfazFinal.html';
+            });
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agradecimiento</title>
+    <link rel="stylesheet" href="estiloscss/stilos.css"> <!-- Llamado al archivo CSS -->
+</head>
+<body>
+
+    <div class="container">
+        <h1>¡Gracias por utilizar nuestro programa!</h1>
+        <p>Tu participación es muy importante para nosotros. Si necesitas realizar más consultas o agregar más síntomas, puedes hacerlo a continuación.</p>
+        
+        <button class="button" id="button-reask">VOLVER A PREGUNTAR</button>
+        <button class="button secondary" id="button-add-symptoms">AGREGAR SÍNTOMAS</button>
+    </div>
+
+    <script>
+        // Evento para el botón "VOLVER A PREGUNTAR"
+        document.getElementById('button-reask').addEventListener('click', () => {
+            fetch('http://localhost:3000/reset_pregunta_count')
+                .then(response => response.json())
+                .then(() => {
+                    // Limpiar localStorage y redirigir
+                    localStorage.removeItem('ultimoSintomaId');
+                    localStorage.removeItem('preguntaCount');
+                    window.location.href = 'Interfaz2.html'; // Volver a la pantalla de preguntas
+                })
+                .catch(error => {
+                    console.error('Error al reiniciar el contador de preguntas:', error);
+                });
+        });
+
+        // Evento para el botón "AGREGAR SÍNTOMAS"
+        document.getElementById('button-add-symptoms').addEventListener('click', () => {
+            window.location.href = 'InterfazAggSintomas.html'; // Reemplaza con la ruta a la pantalla para agregar síntomas
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Síntomas</title>
+    <link rel="stylesheet" href="estiloscss/stilos.css"> 
+</head>
+<body>
+
+    <div class="container">
+        <h1>Tu diagnóstico fue:</h1>
+        <div class="diagnostic-box">
+            <!-- Aquí se mostrará el diagnóstico -->
+            <p id="diagnostic-text">Diagnóstico cargado desde la base de datos.</p>
+        </div>
+
+        <p>Aparte de los síntomas que identificaste, ¿hay algún otro que experimentaste y no estaba en el formulario?</p>
+        
+        <div class="form-group">
+            <label for="new-symptom">Síntoma adicional:</label>
+            <input type="text" id="new-symptom" name="new-symptom" placeholder="Ingrese un nuevo síntoma">
+        </div>
+
+        <button class="button" id="button-add">AGREGAR</button>
+        <button class="button secondary" id="button-exit">SALIR</button>
+    </div>
+
+    <script>
+        // Obtener el diagnóstico almacenado
+        const diagnostico = localStorage.getItem('diagnosticoActual');
+    
+        // Mostrar el diagnóstico en la página
+        if (diagnostico) {
+            document.getElementById('diagnostic-text').textContent = diagnostico;
+        } else {
+            document.getElementById('diagnostic-text').textContent = 'No se pudo obtener un diagnóstico.';
+        }
+    
+        // Agregar evento al botón de agregar síntoma
+        document.getElementById('button-add').addEventListener('click', () => {
+            const newSymptom = document.getElementById('new-symptom').value;
+    
+            if (newSymptom && diagnostico) {
+                fetch('http://localhost:3000/add-symptom', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symptom: newSymptom,
+                        diagnostic: diagnostico // Pasamos el diagnóstico actual
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Síntoma agregado con éxito');
+                    // Limpiar el campo de entrada una vez guardado el síntoma
+                    document.getElementById('new-symptom').value = '';
+                })
+                .catch(error => {
+                    console.error('Error al agregar síntoma:', error);
+                });
+            } else {
+                alert('Por favor, complete todos los campos.');
+            }
+        });
+    
+        document.getElementById('button-exit').addEventListener('click', () => {
+            window.location.href = 'InterfazFinal.html'; // Redirige a la pantalla de agradecimiento
+        });
+    </script>
+    
+</body>
+</html>

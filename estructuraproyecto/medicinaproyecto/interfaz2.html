@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscando un diagnóstico</title>
+    <link rel="stylesheet" href="estiloscss/stilos.css"> <!-- Llamado al archivo CSS -->
+    <style>
+        /* Estilos para que las dos secciones queden una al lado de la otra en pantallas grandes */
+        .container {
+            display: flex;
+            justify-content: space-between; /* Espacio entre los elementos */
+            align-items: flex-start; /* Alinea los elementos en la parte superior */
+            gap: 20px; /* Espacio entre las secciones */
+        }
+
+        /* Estilo para la sección de preguntas */
+        .preguntas-container {
+            width: 60%; /* Ajusta el ancho de la sección de preguntas */
+        }
+
+        /* Estilo para la sección del historial */
+        .registro-container {
+            width: 35%; /* Ajusta el ancho de la sección del historial */
+            border: 1px solid #ccc; /* Añadir borde alrededor del historial */
+            padding: 15px;
+            background-color: #f9f9f9; /* Color de fondo suave */
+        }
+
+        .registro-container h2 {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        /* Quitar los puntos de la lista */
+        .registro-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Botones estilizados */
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 1em;
+            background-color: #4CAF50; /* Color verde */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        /* Diseño responsivo para pantallas más pequeñas */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* En pantallas pequeñas, las secciones se apilan */
+            }
+
+            .preguntas-container, .registro-container {
+                width: 100%; /* Cada sección ocupa el 100% del ancho en pantallas pequeñas */
+            }
+
+            .registro-container {
+                margin-top: 20px; /* Añadir espacio entre las dos secciones */
+            }
+        }
+    </style>
+</head>
+<body>
+
+ <!-- Contenedor principal -->
+<div class="main-container">
+    <!-- Sección de preguntas -->
+    <div class="preguntas-container">
+        <h1>Buscando un diagnóstico</h1>
+        <p id="pregunta">¿Has notado algo raro o diferente en tu piel últimamente?</p>
+        <div>
+            <button id="si-btn" class="button">SI</button>
+            <button id="no-btn" class="button">NO</button>
+        </div>
+    </div>
+
+    <!-- Sección de registro de preguntas y respuestas -->
+    <div class="registro-container">
+        <h2>Historial de Respuestas</h2>
+        <ul id="registro-respuestas">
+            <!-- Aquí se agregarán las preguntas y respuestas en tiempo real -->
+        </ul>
+    </div>
+</div>
+
+
+    <script src="funcionalidadesjs/main.js"></script> <!-- Llamado al archivo JS -->
+</body>
+</html>
